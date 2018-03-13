@@ -5,7 +5,7 @@
 
 @echo off
 @echo ===============================PHP CODE SNIFFER REPORT===============================
-call vendor\bin\phpcs .\src --standard=.\dev\tests\static\Magento --ignore=src/Magento/FunctionalTestingFramework/Group/
+call vendor\bin\phpcs .\src --standard=.\dev\tests\static\Magento --ignore=src\Magento\FunctionalTestingFramework\Group\
 call vendor\bin\phpcs .\dev\tests\unit --standard=.\dev\tests\static\Magento
 call vendor\bin\phpcs .\dev\tests\verification --standard=.\dev\tests\static\Magento --ignore=dev\tests\verification\_generated
 
