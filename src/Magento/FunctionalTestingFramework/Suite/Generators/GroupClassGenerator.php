@@ -106,7 +106,8 @@ class GroupClassGenerator
             /** @var ActionObject $action */
             $entityArray = [];
             $entityArray[self::ENTITY_MERGE_KEY] = $action->getStepKey();
-            $entityArray[self::MAGENTO_CLI_COMMAND_COMMAND] = $action->getCustomActionAttributes()[self::MAGENTO_CLI_COMMAND_COMMAND] ?? null;
+            $entityArray[self::MAGENTO_CLI_COMMAND_COMMAND] =
+                $action->getCustomActionAttributes()[self::MAGENTO_CLI_COMMAND_COMMAND] ?? null;
             if (in_array($action->getType(), self::DATA_PERSISTENCE_ACTIONS)) {
                 $entityArray[self::ENTITY_NAME_TAG] =
                     $action->getCustomActionAttributes()['entity'] ??
@@ -118,7 +119,6 @@ class GroupClassGenerator
                         $this->buildReqEntitiesMustacheArray($action->getCustomActionAttributes());
                 }
             }
-
 
             $mustacheHookArray[$action->getType()][] = $entityArray;
         }
