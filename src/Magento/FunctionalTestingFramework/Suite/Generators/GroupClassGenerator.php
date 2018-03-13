@@ -26,6 +26,8 @@ class GroupClassGenerator
     const REQUIRED_ENTITY_KEY = 'requiredEntities';
     const LAST_REQUIRED_ENTITY_TAG = 'last';
     const MUSTACHE_VAR_TAG = 'var';
+    const MAGENTO_CLI_COMMAND_COMMAND = 'command';
+    const DATA_PERSISTENCE_ACTIONS = ["createData", "deleteData"];
 
     const GROUP_DIR_NAME = 'Group';
 
@@ -104,15 +106,19 @@ class GroupClassGenerator
             /** @var ActionObject $action */
             $entityArray = [];
             $entityArray[self::ENTITY_MERGE_KEY] = $action->getStepKey();
-            $entityArray[self::ENTITY_NAME_TAG] =
-                $action->getCustomActionAttributes()['entity'] ??
-                $action->getCustomActionAttributes()[TestGenerator::REQUIRED_ENTITY_REFERENCE];
+            $entityArray[self::MAGENTO_CLI_COMMAND_COMMAND] = $action->getCustomActionAttributes()[self::MAGENTO_CLI_COMMAND_COMMAND] ?? null;
+            if (in_array($action->getType(), self::DATA_PERSISTENCE_ACTIONS)) {
+                $entityArray[self::ENTITY_NAME_TAG] =
+                    $action->getCustomActionAttributes()['entity'] ??
+                    $action->getCustomActionAttributes()[TestGenerator::REQUIRED_ENTITY_REFERENCE];
 
-            // if there is more than 1 custom attribute, we can assume there are required entities
-            if (count($action->getCustomActionAttributes()) > 1) {
-                $entityArray[self::REQUIRED_ENTITY_KEY] =
-                    $this->buildReqEntitiesMustacheArray($action->getCustomActionAttributes());
+                // if there is more than 1 custom attribute, we can assume there are required entities
+                if (count($action->getCustomActionAttributes()) > 1) {
+                    $entityArray[self::REQUIRED_ENTITY_KEY] =
+                        $this->buildReqEntitiesMustacheArray($action->getCustomActionAttributes());
+                }
             }
+
 
             $mustacheHookArray[$action->getType()][] = $entityArray;
         }

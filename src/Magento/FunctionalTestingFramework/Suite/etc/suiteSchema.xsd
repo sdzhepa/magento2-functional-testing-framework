@@ -5,10 +5,21 @@
   * See COPYING.txt for license details.
   */
 -->
-
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:include schemaLocation="../../Test/etc/testSchema.xsd"/>
+
+    <xs:include schemaLocation="../../Test/etc/Actions/dataActions.xsd"/>
+    <xs:include schemaLocation="../../Test/etc/Actions/customActions.xsd"/>
+
+    <xs:group name="suiteActions">
+        <xs:choice>
+            <xs:element type="createDataType" name="createData" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="deleteDataType" name="deleteData" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="magentoCLIType" name="magentoCLI" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:group>
+
     <xs:element name="suites" type="suiteConfigType"/>
+
     <xs:complexType name="groupSuiteOptionType">
         <xs:simpleContent>
             <xs:extension base="xs:string">
@@ -50,7 +61,7 @@
     </xs:complexType>
     <xs:complexType name="suiteHookType">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:group ref="dataOperationTags" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:group ref="suiteActions" maxOccurs="unbounded" minOccurs="0"/>
         </xs:choice>
     </xs:complexType>
     <xs:complexType name="suiteType">
