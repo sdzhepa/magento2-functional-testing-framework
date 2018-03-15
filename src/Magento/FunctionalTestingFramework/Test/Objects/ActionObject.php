@@ -371,7 +371,7 @@ class ActionObject
         foreach ($relevantDataAttributes as $dataAttribute) {
             $varInput = $this->actionAttributes[$dataAttribute];
             $replacement = $this->findAndReplaceReferences(DataObjectHandler::getInstance(), $varInput);
-            if ($replacement != null) {
+            if ($replacement !== null) {
                 $this->resolvedCustomAttributes[$dataAttribute] = $replacement;
             }
         }
@@ -482,7 +482,7 @@ class ActionObject
                 $replacement = $this->resolveEntityDataObjectReference($obj, $match);
             }
 
-            if ($replacement == null) {
+            if ($replacement === null) {
                 if (get_class($objectHandler) != DataObjectHandler::class) {
                     return $this->findAndReplaceReferences(DataObjectHandler::getInstance(), $outputString);
                 } else {
