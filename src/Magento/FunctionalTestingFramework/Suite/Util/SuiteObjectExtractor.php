@@ -6,6 +6,7 @@
 namespace Magento\FunctionalTestingFramework\Suite\Util;
 
 use Exception;
+use Magento\FunctionalTestingFramework\Exceptions\XmlException;
 use Magento\FunctionalTestingFramework\Suite\Objects\SuiteObject;
 use Magento\FunctionalTestingFramework\Test\Handlers\TestObjectHandler;
 use Magento\FunctionalTestingFramework\Test\Objects\TestObject;
@@ -37,15 +38,20 @@ class SuiteObjectExtractor extends BaseObjectExtractor
      *
      * @param array $parsedSuiteData
      * @return array
+     * @throws XmlException
      */
     public function parseSuiteDataIntoObjects($parsedSuiteData)
     {
         $suiteObjects = [];
         $testHookObjectExtractor = new TestHookObjectExtractor();
         foreach ($parsedSuiteData[self::SUITE_ROOT_TAG] as $parsedSuite) {
+
             if (!is_array($parsedSuite)) {
                 // skip non array items parsed from suite (suite objects will always be arrays)
                 continue;
+            }
+            if ($parsedSuite[self::NAME] == 'default'){
+                throw new XmlException("A Suite can not have the name \"default\"");
             }
 
             $suiteHooks = [];

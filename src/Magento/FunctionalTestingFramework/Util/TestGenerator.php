@@ -29,6 +29,7 @@ class TestGenerator
 {
     const REQUIRED_ENTITY_REFERENCE = 'createDataKey';
     const GENERATED_DIR = '_generated';
+    const DEFAULT_DIR = 'default';
 
     /**
      * Path to the export dir.
@@ -60,14 +61,9 @@ class TestGenerator
     private function __construct($exportDir, $tests)
     {
         // private constructor for factory
-        if ($exportDir == self::DEFAULT_DIR){
-            throw new XmlException("A Suite can not have the name ". self::DEFAULT_DIR);
-        }
         $this->exportDirName = $exportDir ?? self::DEFAULT_DIR;
         $exportDir = $exportDir ?? self::DEFAULT_DIR;
-        $this->exportDirectory = rtrim(
-            TESTS_MODULE_PATH . DIRECTORY_SEPARATOR . self::GENERATED_DIR . DIRECTORY_SEPARATOR . $exportDir
-        );
+        $this->exportDirectory = TESTS_MODULE_PATH . DIRECTORY_SEPARATOR . self::GENERATED_DIR . DIRECTORY_SEPARATOR . $exportDir;
         $this->tests = $tests;
     }
 
