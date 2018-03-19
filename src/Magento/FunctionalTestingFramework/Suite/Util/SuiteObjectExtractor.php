@@ -49,6 +49,7 @@ class SuiteObjectExtractor extends BaseObjectExtractor
                 // skip non array items parsed from suite (suite objects will always be arrays)
                 continue;
             }
+            print $parsedSuite[self::NAME]. "\n";
             if ($parsedSuite[self::NAME] == 'default'){
                 throw new XmlException("A Suite can not have the name \"default\"");
             }
