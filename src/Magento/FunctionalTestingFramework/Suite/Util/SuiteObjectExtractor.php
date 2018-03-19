@@ -45,7 +45,6 @@ class SuiteObjectExtractor extends BaseObjectExtractor
         $suiteObjects = [];
         $testHookObjectExtractor = new TestHookObjectExtractor();
         foreach ($parsedSuiteData[self::SUITE_ROOT_TAG] as $parsedSuite) {
-
             if (!is_array($parsedSuite)) {
                 // skip non array items parsed from suite (suite objects will always be arrays)
                 continue;
