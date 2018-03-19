@@ -60,10 +60,13 @@ class TestGenerator
     private function __construct($exportDir, $tests)
     {
         // private constructor for factory
-        $this->exportDirName = $exportDir ?? self::GENERATED_DIR;
+        if ($exportDir == self::DEFAULT_DIR){
+            throw new XmlException("A Suite can not have the name ". self::DEFAULT_DIR);
+        }
+        $this->exportDirName = $exportDir ?? self::DEFAULT_DIR;
+        $exportDir = $exportDir ?? self::DEFAULT_DIR;
         $this->exportDirectory = rtrim(
-            TESTS_MODULE_PATH . DIRECTORY_SEPARATOR . self::GENERATED_DIR . DIRECTORY_SEPARATOR . $exportDir,
-            DIRECTORY_SEPARATOR
+            TESTS_MODULE_PATH . DIRECTORY_SEPARATOR . self::GENERATED_DIR . DIRECTORY_SEPARATOR . $exportDir
         );
         $this->tests = $tests;
     }
