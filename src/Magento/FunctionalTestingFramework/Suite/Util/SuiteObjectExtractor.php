@@ -60,9 +60,11 @@ class SuiteObjectExtractor extends BaseObjectExtractor
                 foreach ($testGroupConflicts as $test) {
                     $testGroupConflictsFileNames .= $test->getFilename() . "\n";
                 }
-                throw new XmlException("Suite names and Group names can not have the same value. \t\n Suite: \"{$suiteName}\" also exists as a group annotation in \n{$testGroupConflictsFileNames}");
+                throw new XmlException(
+                    "Suite names and Group names can not have the same value. \t\n 
+                    Suite: \"{$suiteName}\" also exists as a group annotation in \n{$testGroupConflictsFileNames}"
+                );
             }
-
 
             //extract include and exclude references
             $groupTestsToInclude = $parsedSuite[self::INCLUDE_TAG_NAME] ?? [];

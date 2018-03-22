@@ -117,6 +117,4 @@ class TestObjectExtractor extends BaseObjectExtractor
             throw new XmlException($exception->getMessage() . ' in Test ' . $filename);
         }
     }
-
-
 }
