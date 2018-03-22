@@ -145,7 +145,6 @@ class TestGenerator
         DirSetupUtil::createGroupDir($this->exportDirectory);
 
         // create our manifest file here
-
         $testManifest = TestManifestFactory::makeManifest(
             dirname($this->exportDirectory),
             $this->exportDirectory,
