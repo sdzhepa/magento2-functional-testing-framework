@@ -62,13 +62,34 @@ class SuiteGenerator
     }
 
     /**
+     * Function which takes all suite configurations and generates to appropriate directory, updating yml configuration
+     * as needed. Returns an array of all tests generated keyed by test name.
+     *
+     * @param string $config
+     * @return array
+     */
+    public function generateAllSuites($config)
+    {
+        $testsReferencedInSuites = [];
+        $suites = SuiteObjectHandler::getInstance()->getAllObjects();
+        foreach ($suites as $suite) {
+            /** @var SuiteObject $suite */
+            $testsReferencedInSuites = array_merge($testsReferencedInSuites, $suite->getTests());
+            $this->generateSuite($suite->getName(), $config);
+        }
+
+        return $testsReferencedInSuites;
+    }
+
+    /**
      * Function which takes a suite name and generates corresponding dir, test files, group class, and updates
      * yml configuration for group run.
      *
      * @param string $suiteName
+     * @param string $config
      * @return void
      */
-    public function generateSuite($suiteName)
+    public function generateSuite($suiteName, $config)
     {
         /**@var SuiteObject $suite **/
         $suite = SuiteObjectHandler::getInstance()->getObject($suiteName);
@@ -77,7 +98,7 @@ class SuiteGenerator
         $groupNamespace = null;
 
         DirSetupUtil::createGroupDir($fullPath);
-        $this->generateRelevantGroupTests($suiteName, $suite->getTests());
+        $this->generateRelevantGroupTests($suiteName, $suite->getTests(), $config);
 
         if ($suite->requiresGroupFile()) {
             // if the suite requires a group file, generate it and set the namespace
@@ -135,11 +156,12 @@ class SuiteGenerator
      *
      * @param string $path
      * @param array $tests
+     * @param string $config
      * @return void
      */
-    private function generateRelevantGroupTests($path, $tests)
+    private function generateRelevantGroupTests($path, $tests, $config)
     {
         $testGenerator = TestGenerator::getInstance($path, $tests);
-        $testGenerator->createAllTestFiles();
+        $testGenerator->createAllTestFiles($config);
     }
 }
